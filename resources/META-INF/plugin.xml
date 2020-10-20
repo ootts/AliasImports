@@ -1,0 +1,39 @@
+<idea-plugin>
+    <id>com.zju3dv.python_alias_import</id>
+    <name>AliasImports</name>
+    <version>1.2</version>
+    <vendor email="chenlinghao@zju.edu.cn" url="https://github.com/f-sky">ZJU3DV-ChenLinghao</vendor>
+
+    <description><![CDATA[
+      Auto import libraries as their conventional aliases,
+       such as numpy as np, os.path as osp, matplotlib.pyplot as plt, tensorflow as tf, etc.
+       Just type in "np." in pycharm, and the "import numpy as np" is inserted automatically on the top of the script.
+       This aliases can be customized by editing ~/.cache/map.json. <br>
+       NOTE: THIS PLUGIN ASSUMES THAT YOUR IMPORTS ARE ON THE TOP OF ANY OTHER CODES. <br>
+       NOTE: YOU HAVE TO RESTART YOUR IDE AFTER CUSTOMIZING THE CONFIG FILE.
+    ]]></description>
+
+    <change-notes><![CDATA[
+        v1.0: By default, there are "numpy->np, tensorflow->tf, pandas->pd, os.path->osp, matplotlib.pyplot->plt"
+        in the config file. <br>
+        v1.1: Fix empty line bug.
+        v1.2: Fix bugs in comment line, python console and variable evaluator.
+    ]]>
+    </change-notes>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="201.0"/>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.pycharm</depends>
+    <depends config-file="withJson.xml">org.json</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <!--    <typedHandler implementation="MyTypedHandler"/>-->
+        <!--    <typedHandler implementation="MyTypedHandlerNp"/>-->
+        <typedHandler implementation="AutoImportAliasesHandler"/>
+    </extensions>
+
+</idea-plugin>
