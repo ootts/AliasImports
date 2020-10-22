@@ -6,15 +6,14 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+//import org.json.simple.JSONArray;
+//import org.json.simple.JSONObject;
+//import org.json.simple.parser.JSONParser;
+//import org.json.simple.parser.ParseException;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 
 public class AutoImportAliasesHandler extends TypedHandlerDelegate {
@@ -103,30 +102,34 @@ public class AutoImportAliasesHandler extends TypedHandlerDelegate {
     }
 
     private HashMap<String, String> readjson(String filepath) {
-        JSONParser jsonParser = new JSONParser();
         HashMap<String, String> result = new HashMap<>();
-        try (FileReader reader = new FileReader(filepath)) {
-            Object obj = jsonParser.parse(reader);
-            JSONArray employeeList = (JSONArray) obj;
-            JSONObject o = (JSONObject) employeeList.get(0);
-            for (int i = 0; i < o.size(); i++) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+                line = br.readLine();
+            }
+            String everything = sb.toString();
+            JSONArray ja = new JSONArray(everything);
+            JSONObject o = (JSONObject) ja.get(0);
+            for (int i = 0; i < o.length(); i++) {
                 String k = (String) o.keySet().toArray()[i];
-                String v = (String) o.values().toArray()[i];
+                String v = (String) o.get(k);
                 result.put(k, v);
             }
-        } catch (IOException | ParseException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return result;
     }
 
     private void writejson(HashMap<String, String> map, String filepath) {
-        JSONArray aliasList = new JSONArray();
-        JSONObject aliasDetails = new JSONObject();
-        map.forEach(aliasDetails::put);
-        aliasList.add(aliasDetails);
+        JSONArray array = new JSONArray();
+        array.put(map);
         try (FileWriter file = new FileWriter(filepath)) {
-            file.write(aliasList.toJSONString());
+            file.write(array.toString());
             file.flush();
         } catch (IOException e) {
             e.printStackTrace();
