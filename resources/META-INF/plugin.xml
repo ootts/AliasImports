@@ -19,7 +19,7 @@
         v1.1: Fix empty line bug.<br>
         v1.2: Fix bugs in comment line, python console and variable evaluator.<br>
         v1.3: Add compatibility to PyCharm Edu and PyCharm Community.<br>
-        v1.4: Add support to the block comments on the top the script.
+        v1.4: Add support to the block comments on the top the script with a pair of ''' or """.
     ]]>
     </change-notes>
 
