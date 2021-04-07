@@ -57,8 +57,32 @@ public class AutoImportAliasesHandler extends TypedHandlerDelegate {
                 if (!currentline.contains("#")) {
                     this.aliases.forEach((k, v) -> {
                         if (doc.endsWith(k + ".")) {
+                            int non_comment_start_line = 0;
+                            int place_to_insert = 0;
+                            if (strings[0].startsWith("'''")) {
+                                place_to_insert = strings[0].length() + 1;
+                                for (int i = 1; i < strings.length; i++) {
+                                    place_to_insert += strings[i].length() + 1;
+                                    if (strings[i].endsWith("'''")) {
+                                        non_comment_start_line = i + 1;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (strings[0].startsWith("\"\"\"")) {
+                                place_to_insert = strings[0].length() + 1;
+                                for (int i = 1; i < strings.length; i++) {
+                                    place_to_insert += strings[i].length() + 1;
+                                    if (strings[i].endsWith("\"\"\"")) {
+                                        non_comment_start_line = i + 1;
+                                        break;
+                                    }
+                                }
+                            }
                             boolean flag = false;
-                            for (String s : strings) {
+                            for (int i = non_comment_start_line; i < strings.length; i++) {
+//                            for (String s : strings) {
+                                String s = strings[i];
                                 s = s.trim();
                                 System.out.println(s);
                                 if (s.equals("") || s.startsWith("#") || s.startsWith("from")) {
@@ -74,7 +98,7 @@ public class AutoImportAliasesHandler extends TypedHandlerDelegate {
                             }
                             if (!flag) {
                                 String toinsert = "import " + v + " as " + k + "\n";
-                                document.insertString(0, toinsert);
+                                document.insertString(place_to_insert, toinsert);
                             }
                         }
                     });

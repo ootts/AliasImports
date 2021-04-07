@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.zju3dv.python_alias_import</id>
     <name>AliasImports</name>
-    <version>1.3</version>
+    <version>1.4</version>
     <vendor email="chenlinghao@zju.edu.cn" url="https://github.com/f-sky">ZJU3DV-ChenLinghao</vendor>
 
     <description><![CDATA[
@@ -19,6 +19,7 @@
         v1.1: Fix empty line bug.<br>
         v1.2: Fix bugs in comment line, python console and variable evaluator.<br>
         v1.3: Add compatibility to PyCharm Edu and PyCharm Community.<br>
+        v1.4: Add support to the block comments on the top the script.
     ]]>
     </change-notes>
 
