@@ -1,39 +1,50 @@
 <idea-plugin>
     <id>com.zju3dv.python_alias_import</id>
     <name>AliasImports</name>
-    <version>1.4</version>
+    <version>2.0</version>
     <vendor email="chenlinghao@zju.edu.cn" url="https://github.com/f-sky">ZJU3DV-ChenLinghao</vendor>
 
     <description><![CDATA[
-      Auto import libraries as their conventional aliases,
-       such as numpy as np, os.path as osp, matplotlib.pyplot as plt, tensorflow as tf, etc.
-       Just type in "np." in pycharm, and the "import numpy as np" is inserted automatically on the top of the script.
-       This aliases can be customized by editing ~/.cache/map.json. <br>
-       NOTE: THIS PLUGIN ASSUMES THAT YOUR IMPORTS ARE ON THE TOP OF ANY OTHER CODES. <br>
-       NOTE: YOU HAVE TO RESTART YOUR IDE AFTER CUSTOMIZING THE CONFIG FILE.
+        <b>Features </b>
+        <li>Import libraries as their conventional aliases seamlessly when you type in the dot, just like you have imported them,
+        such as numpy as np, os.path as osp, matplotlib.pyplot as plt, tensorflow as tf, etc.</li>
+        <li>More than aliases, identical alias and full-name are imported seamlessly.</li>
+        <li>Support customization via Settings-Tools-AliasImports.</li>
     ]]></description>
 
+
     <change-notes><![CDATA[
-        v1.0: By default, there are "numpy->np, tensorflow->tf, pandas->pd, os.path->osp, matplotlib.pyplot->plt"
+        <b>v2.0: Brand new design.</b><br>
+        (Feature) Now you can customize aliases in Settings-Tools-AliasImport without the need of restarting the IDE!
+        (Feature) New option for automatically importing aliases in Python console and variable evaluator.
+        (Feature) More than aliases: Support for identical alias and full-name, such as torch.
+        <br>
+        <b>v1.4</b><br>
+        (Feature) Add support to the block comments on the top the script with a pair of ''' or """.<br>
+        <b>v1.3</b><br>
+        (Feature) Add compatibility to PyCharm Edu and PyCharm Community.<br>
+        <b>v1.2</b><br>
+        (Bug Fix) Fix bugs in comment line, python console and variable evaluator.<br>
+        <b>v1.1</b><br>
+        (Bug Fix) Fix empty line bug.<br>
+        <b>v1.0 </b><br>
+        (Feature) By default, there are "numpy->np, tensorflow->tf, pandas->pd, os.path->osp, matplotlib.pyplot->plt"
         in the config file. <br>
-        v1.1: Fix empty line bug.<br>
-        v1.2: Fix bugs in comment line, python console and variable evaluator.<br>
-        v1.3: Add compatibility to PyCharm Edu and PyCharm Community.<br>
-        v1.4: Add support to the block comments on the top the script with a pair of ''' or """.
     ]]>
     </change-notes>
 
     <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="193.0"/>
+    <idea-version since-build="201.6668.113"/>
 
     <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
     <depends>com.intellij.modules.pycharm</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
-
-        <typedHandler implementation="AutoImportAliasesHandler"/>
+        <applicationConfigurable parentId="tools" instance="AliasImportConfigurable"
+                                 displayName="AliasImports"/>
+        <applicationService serviceImplementation="AliasImportState"/>
+        <typedHandler implementation="AliasImportHandler"/>
     </extensions>
 
 </idea-plugin>
