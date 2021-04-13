@@ -71,7 +71,8 @@ public class AliasImportHandler extends TypedHandlerDelegate {
                                     if (s.equals("") || s.startsWith("#") || s.startsWith("from")) {
                                         continue;
                                     } else if (s.startsWith("import")) {
-                                        if (s.startsWith("import " + v + " as " + k)) {
+                                        if ((!v.equals(k) && s.startsWith("import " + v + " as " + k)) ||
+                                                (v.equals(k) && s.startsWith("import " + v))) {
                                             flag = true;
                                             break;
                                         }

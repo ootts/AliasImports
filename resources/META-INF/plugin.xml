@@ -16,6 +16,7 @@
     <change-notes><![CDATA[
         <b>v2.1</b><br>
         (Feature) Support enabling in Python Console and variable evaluator separately.<br>
+        (Bug Fix) importing bug when alias and full-name are the same.<br>
         <b>v2.0: Brand new design.</b><br>
         (Feature) Now you can customize aliases in Settings-Tools-AliasImport without the need of restarting the IDE!
         (Feature) New option for automatically importing aliases in Python console and variable evaluator.
