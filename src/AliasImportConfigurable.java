@@ -34,7 +34,8 @@ public class AliasImportConfigurable implements Configurable {
     @Override
     public boolean isModified() {
         AliasImportState settings = AliasImportState.getInstance();
-        boolean modified = mySettingsComponent.getPCVEEnabled() != settings.pcveEnabled;
+        boolean modified = mySettingsComponent.getPCEnabled() != settings.pcEnabled;
+        modified |= mySettingsComponent.getVEEnabled()!=settings.veEnabled;
         modified |= !mySettingsComponent.getTable().toString().equals(settings.aliases.toString());
         return modified;
     }
@@ -42,14 +43,16 @@ public class AliasImportConfigurable implements Configurable {
     @Override
     public void apply() {
         AliasImportState settings = AliasImportState.getInstance();
-        settings.pcveEnabled = mySettingsComponent.getPCVEEnabled();
+        settings.pcEnabled = mySettingsComponent.getPCEnabled();
+        settings.veEnabled = mySettingsComponent.getVEEnabled();
         settings.aliases = mySettingsComponent.getTable();
     }
 
     @Override
     public void reset() {
         AliasImportState settings = AliasImportState.getInstance();
-        mySettingsComponent.setPCVEEnabled(settings.pcveEnabled);
+        mySettingsComponent.setPCEnabled(settings.pcEnabled);
+        mySettingsComponent.setVEEnabled(settings.veEnabled);
         mySettingsComponent.setTable(settings.aliases);
     }
 

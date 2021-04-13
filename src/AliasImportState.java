@@ -15,7 +15,8 @@ import java.util.ArrayList;
 )
 public class AliasImportState implements PersistentStateComponent<AliasImportState> {
 
-    public boolean pcveEnabled = false;
+    public boolean pcEnabled = false;
+    public boolean veEnabled = false;
     public ArrayList<String> aliases = new ArrayList<>() {{
         add("np numpy");
         add("plt matplotlib.pyplot");

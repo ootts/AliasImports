@@ -3,6 +3,7 @@ import com.intellij.ui.AnActionButton;
 import com.intellij.ui.AnActionButtonRunnable;
 import com.intellij.ui.ToolbarDecorator;
 import com.intellij.ui.components.JBCheckBox;
+import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.table.JBTable;
 import com.intellij.util.ui.FormBuilder;
 import org.jetbrains.annotations.Nls;
@@ -17,14 +18,16 @@ import java.util.ArrayList;
 public class AliasImportComponent {
 
     private final JPanel myMainPanel;
-    private final JBCheckBox pcve_enabled = new JBCheckBox("Enable in python console and variable evaluator");
+    private final JBCheckBox python_console_enabled = new JBCheckBox("Enable in Python Console");
+    private final JBCheckBox variable_evaluator_enabled = new JBCheckBox("Enable in variable evaluator");
     private final JBTable myTable = new JBTable();
+    private final JBLabel myText=new JBLabel("NOTE: Any spaces will not take effect.");
 
 
     public AliasImportComponent() {
         myTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        myTable.setVisibleRowCount(25);
-        myTable.setToolTipText("ANY BLANK WILL NOT HAVE EFFECT.");
+        myTable.setVisibleRowCount(24);
+//        myTable.setToolTipText("ANY BLANK WILL NOT HAVE EFFECT.");
 
         JTableHeader tableHeader = myTable.getTableHeader();
 
@@ -50,8 +53,10 @@ public class AliasImportComponent {
         panel.add(panel1, BorderLayout.CENTER);
 //        JPanel
         myMainPanel = FormBuilder.createFormBuilder()
-                .addComponent(pcve_enabled, 1)
+                .addComponent(python_console_enabled, 1)
+                .addComponent(variable_evaluator_enabled, 1)
                 .addComponent(panel1)
+                .addComponent(myText)
                 .addComponentFillVertically(new JPanel(), 0)
                 .getPanel();
     }
@@ -61,16 +66,23 @@ public class AliasImportComponent {
     }
 
     public JComponent getPreferredFocusedComponent() {
-        return pcve_enabled;
+        return python_console_enabled;
     }
 
 
-    public boolean getPCVEEnabled() {
-        return pcve_enabled.isSelected();
+    public boolean getPCEnabled() {
+        return python_console_enabled.isSelected();
     }
 
-    public void setPCVEEnabled(boolean newStatus) {
-        pcve_enabled.setSelected(newStatus);
+    public void setPCEnabled(boolean newStatus) {
+        python_console_enabled.setSelected(newStatus);
+    }
+    public boolean getVEEnabled() {
+        return variable_evaluator_enabled.isSelected();
+    }
+
+    public void setVEEnabled(boolean newStatus) {
+        variable_evaluator_enabled.setSelected(newStatus);
     }
 
 

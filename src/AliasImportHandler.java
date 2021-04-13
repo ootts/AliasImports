@@ -27,7 +27,9 @@ public class AliasImportHandler extends TypedHandlerDelegate {
         ArrayList<String> aliases = instance.aliases;
         Runnable runnable = () -> {
             if (c == '.') {
-                if (!document.toString().contains("LightVirtualFile") || instance.pcveEnabled) {
+                if (!document.toString().contains("LightVirtualFile") ||
+                        (document.toString().contains("LightVirtualFile: /Python Console") && instance.pcEnabled) ||
+                        (document.toString().contains("LightVirtualFile: /fragment.py") && instance.veEnabled)) {
                     Caret primaryCaret = editor.getCaretModel().getPrimaryCaret();
                     String[] strings = document.getText().split("\n");
                     String doc = document.getText().substring(0, primaryCaret.getOffset());
