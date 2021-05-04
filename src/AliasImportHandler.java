@@ -36,11 +36,12 @@ public class AliasImportHandler extends TypedHandlerDelegate {
                     String[] lines = doc.split("\n");
                     String currentline = lines[lines.length - 1];
                     if (!currentline.contains("#")) {
+                        String[] strings1 = currentline.substring(0, currentline.length() - 1).split("\\W");
                         for (String pair : aliases) {
                             String[] strs = pair.split(" ");
                             String k = strs[0];
                             String v = strs[1];
-                            if (doc.endsWith(k + ".")) {
+                            if (strings1[strings1.length - 1].equals(k)) {
                                 int non_comment_start_line = 0;
                                 int place_to_insert = 0;
                                 if (strings[0].startsWith("'''")) {
